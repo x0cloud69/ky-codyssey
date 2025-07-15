@@ -27,6 +27,9 @@ Visual Studio Code에서 power_calculator.py 파일을 열고 터미널에서 py
 프로그램의 실행 로직: """
 
 def calculate_power(base, exponent):
+  if base == 0:
+     print("0은 음수 지수를 가질 수 없습니다.")
+     return None
   #거급제곱 계산을 위한 함수
   result = 1
   
@@ -62,5 +65,3 @@ def main():
 if __name__ == "__main__":
   main()
   
-
-
