@@ -21,30 +21,22 @@ def calculate(a,b,operator):
         if b == 0:
             raise ValueError("Error: Division by zero.")
         return divide(a,b)
+    raise ValueError("Invalid number input.")
 
 def main():
     result = 0
     try:
-       a = int(input("Enter first numner:"))
-    except ValueError:
-        print("Invalid number inpit:")
-        return
-    
-    try:
-        b = int (input("Enter second number:"))
-    except ValueError:
-        print("Invalid number input.")
-        return
-    
-    operator = input("Enter operator (+, -, *, /): ")
-    if operator not in ['+', '-', '*', '/']:
-
-        print("Invalid operator input.")
-        return
-
-    try:
-        result = calculate(a,b, operator)
+        a = float(input("Enter first numner:"))
+        b = float(input("Enter second number:"))
+        a = int(a)
+        b = int(b)
+        operator = input("Enter operator (+, -, *, /): ")
+        if operator not in ['+', '-', '*', '/']:
+            print("Invalid operator input.")
+            return
+        result = calculate(a, b, operator)
         print(f"Result:  <{result}>")
+        # except ValueError as e:
     except ValueError as e:
         print(e)
 

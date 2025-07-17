@@ -1,4 +1,7 @@
+# reuest : 클라이언트로부터 받은 HTTP 요청 정보를 담고 있는 객체 (get, post 등)
+# Response : 클라이언트에게 응답할 HTTP 응답 정보를 담고 있는 객체 (예: 음성 파일, json 데이터 등)
 from flask import Flask, request, Response
+# os : 운영체제와 상호작용하기 위한 모듈 (환경변수,파일조작,경로관리 등)
 import os
 #메모리 사용을 위해 BytesIO를 사용 
 from io import BytesIO
@@ -34,6 +37,9 @@ def home():
 
     # 생성된 음성 파일을 HTTP 응답으로 반환
     # mimetype은 'audio/mpeg'로 설정 브라우저가 음성파일로 인식하도록 함
+    #'video/mp4'         # MP4 비디오
+    #'video/mpeg'        # MPEG 비디오
+    #'video/webm'        # WebM 비디오
     return Response(fp.getvalue(), mimetype='audio/mpeg') # 페이지 전달없이 바로 재생
 
 if __name__ == '__main__':

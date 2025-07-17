@@ -52,25 +52,64 @@ def parse_expression(expression):
         
         # 연산자 찾기
         operators = ['+', '-', '*', '/']
-        operator = None
-        operator_index = -1
-        
+       # found_ops = [op for op in operators if op in expression]
+
+        # 연산자가 1개만 있어야 함
+        op_count = sum(expression.count(op) for op in operators)
+        if op_count != 1:
+            raise ValueError("Invalid expression.")
+
         for op in operators:
             if op in expression:
                 operator = op
                 operator_index = expression.index(op)
                 break
-        
-        if operator is None:
-            raise ValueError("Invalid expression.")
-        
-        # 숫자 분리 (정수형 변환)
+
         a = int(expression[:operator_index])
         b = int(expression[operator_index + 1:])
-        
         return a, b, operator
-        
+
     except ValueError:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         raise ValueError("Invalid expression.")
 
 def main():
