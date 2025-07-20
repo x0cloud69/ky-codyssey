@@ -26,7 +26,7 @@ Python 내장 함수인 sorted() 와 리스트 메서드인 .sort() 사용을 �
 
  """
 
-def sort_numbers(numbers):
+""" def sort_numbers(numbers):
     # 입력된 숫자들을 오름차순으로 정렬 (선택 정렬 알고리즘 사용)
     n = len(numbers)
     for i in range(n):
@@ -34,7 +34,9 @@ def sort_numbers(numbers):
             if numbers[j] > numbers[j+1]:
                 # Swap if the element found is greater than the next element
                 numbers[j], numbers[j+1] = numbers[j+1], numbers[j]
-    return numbers
+    return numbers """
+
+
 
 def selection_sort_numbers(numbers):
 
@@ -53,7 +55,8 @@ def main():
     try:
         # 사용자로부터 입력 받기
         input_str = input("숫자를 입력 해주세요(공백으로 구분):")
-        if not input_str:
+        # 입력이 비어 있거나 숫자를 하나만 넣었을때
+        if not input_str or len(input_str.strip()) < 2:
             print("Invalid input.")
             return
         # 입력된 문자열을 공백으로 분리하고 float로 변환
