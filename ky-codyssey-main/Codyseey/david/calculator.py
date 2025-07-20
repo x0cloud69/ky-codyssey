@@ -13,6 +13,7 @@ def divide(a, b):
     return a / b
 
 def calculate_expression():
+    # 사칙연산 우선순위를 고려하여 계산하는 함수
     def get_precedence(op):
         if op in {'+', '-'}:
             return 1
@@ -20,6 +21,7 @@ def calculate_expression():
             return 2
         return 0
 
+    # 연산자 우선순위에 따라 연산을 수행 하는 함수
     def apply_operator(operators, values):
         if not operators:
             return
@@ -37,6 +39,7 @@ def calculate_expression():
         elif op == '/':
             values.append(divide(a, b))
 
+    # 문자열을 계산하는 하는 함수
     def evaluate_expression(expression):
         operators = []
         values = []
@@ -45,16 +48,21 @@ def calculate_expression():
         # 공백 제거
         expression = expression.replace(" ", "")
         
+        # 문자열을 순회하며 숫자와 연산자를 처리
         while i < len(expression):
             if expression[i].isdigit():
                 # 숫자 파싱
                 num = ""
+                # 숫자가 소수점이 포함된 경우도 처리
                 while i < len(expression) and (expression[i].isdigit() or expression[i] == '.'):
                     num += expression[i]
                     i += 1
                 values.append(float(num))
                 i -= 1
-            
+            # 연산자 "(, ), +, -, *, /" 처리
+            # 연산자 "("을 만나면 스택에 추가 
+            # 연산자 ")"을 만나면 스택에서 연산자를 꺼내어 계산
+            # 연산자 +, -, *, /을 만나면 우선순위에 따라 계산
             elif expression[i] == '(':
                 operators.append(expression[i])
             
@@ -64,6 +72,11 @@ def calculate_expression():
                 operators.pop()  # '(' 제거
             
             elif expression[i] in {'+', '-', '*', '/'}:
+                # opeaotors 연산자 처리 -1 은 맨뒤, 현재 연산자와 우선순위 비교
+                # 현재 연산자보다 우선순위가 높은 연산자가 스택에 있는 경우
+                # 스택에서 연산자를 꺼내어 계산하고 현재 연산자를 스택에 추가
+                # 현재 연산자와 우선순위가 같거나 낮은 연산자가 스택에 있는 경우
+                # 현재 연산자를 스택에 추가 
                 while (operators and operators[-1] != '(' and 
                        get_precedence(operators[-1]) >= get_precedence(expression[i])):
                     apply_operator(operators, values)
@@ -73,7 +86,6 @@ def calculate_expression():
         
         while operators:
             apply_operator(operators, values)
-        
         return values[0]
 
     while True:
