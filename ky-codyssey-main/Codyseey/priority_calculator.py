@@ -50,19 +50,16 @@ reset과 revert의 차이점과 협업시 revert를 추천하는 이유를 Markd
 
 Result: 9.0 """
 
-def add(a, b):
-    return a + b
+# david/calculator.py의 함수들을 재사용
+import sys
+import os
 
-def subtract(a, b):
-    return a - b
+# david 디렉토리를 Python 경로에 추가
+david_path = os.path.join(os.path.dirname(__file__), 'david')
+sys.path.append(david_path)
 
-def multiply(a, b):
-    return a * b
-
-def divide(a, b):
-    if b == 0:
-        raise ValueError("0으로 나눌 수 없습니다.")
-    return a / b
+# calculator 모듈에서 함수들을 import
+from calculator import add, subtract, multiply, divide
 
 def calculate_expression():
     # 사칙연산 우선순위를 고려하여 계산하는 함수
@@ -155,11 +152,14 @@ def calculate_expression():
             print(f"오류가 발생했습니다: {e}")
             print("올바른 수식을 입력해주세요.")
 
-# 프로그램 실행
-if __name__ == "__main__":
+def main():
     print("사칙연산 계산기 프로그램입니다.")
     print("사용 가능한 연산자: +, -, *, /")
     print("괄호 사용 가능: ()")
     print("예시: 5*3 + (8-3) * 3")
     calculate_expression()
+
+# 프로그램 실행
+if __name__ == "__main__":
+    main()
 
