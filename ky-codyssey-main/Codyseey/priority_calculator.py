@@ -97,6 +97,12 @@ def calculate_expression():
         # 공백 제거
         expression = expression.replace(" ", "")
         
+        # 허용된 문자만 있는지 검증
+        allowed_chars = set('0123456789.+-*/()')
+        for char in expression:
+            if char not in allowed_chars:
+                raise ValueError(f"허용되지 않는 문자: {char}")
+        
         # 문자열을 순회하며 숫자와 연산자를 처리
         while i < len(expression):
             if expression[i].isdigit():
@@ -149,14 +155,14 @@ def calculate_expression():
             print(f"결과: {result}")
             
         except Exception as e:
-            print(f"오류가 발생했습니다: {e}")
-            print("올바른 수식을 입력해주세요.")
+            print("Invalid Expression")
+            # print("올바른 수식을 입력해주세요.")
 
 def main():
     print("사칙연산 계산기 프로그램입니다.")
     print("사용 가능한 연산자: +, -, *, /")
     print("괄호 사용 가능: ()")
-    print("예시: 5*3 + (8-3) * 3")
+    print("예시: 5*3 + 8-3 * 3")
     calculate_expression()
 
 # 프로그램 실행
