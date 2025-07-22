@@ -1,12 +1,25 @@
 """
-🗺 2단계: 지도 시각화
-반달곰 커피 지도 시각화 프로그램
+🗺 2단계: 지도 시각화 (map_draw.py, map.png)
+✔ 수행 내용
+분석된 데이터를 기반으로 지역 지도를 시각화합니다.
+지도는 좌측 상단이 (1, 1), 우측 하단이 가장 큰 좌표가 되도록 시각화해야 합니다.
+가로/세로 방향의 그리드 라인을 그리고,
+아파트와 빌딩은 갈색 원형,
+반달곰 커피점 위치는 녹색 사각형,
+내 집의 위치는 녹색 삼각형,
+건설 현장은 회색 사각형으로 표현합니다.
+건설 현장을 나타내는 회색 사각형은 바로 옆 좌표와 살짝 겹쳐도 됩니다.
+건설 현장과 기타 구조물(아파트, 빌딩)과 겹치면 건설 현장으로 판단한다.
+이미지로 map.png 파일로 저장합니다.
+시각화 코드는 map_draw.py로 저장합니다.
+(보너스) 아파트, 빌딩, 반달곰 커피 등의 범례를 지도에 함께 표현한다.
 """
 
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
+from mas_map import load_and_analyze_data
 
 # 한글 깨지는 문제 및 음수 표현 해결
 plt.rcParams['font.family'] = 'Malgun Gothic'
@@ -15,15 +28,19 @@ plt.rcParams['axes.unicode_minus'] = False
 def load_data():
     """mas_map.py에서 분석된 데이터를 불러오는 함수"""
     try:
-        # mas_map.py에서 생성된 병합된 데이터 파일 불러오기
-        merged_data = pd.read_csv('C:/codyssey/ky-codyssey-main/Codyseey/merged_data.csv')
-        area1_data = pd.read_csv('C:/codyssey/ky-codyssey-main/Codyseey/area1_data.csv')
+       
         
-        print("✅ mas_map.py에서 분석된 데이터를 성공적으로 불러왔습니다.")
+        # DataFrame 가져오기
+        area1_data, merged_data = load_and_analyze_data()
+        
+        print("✅ mas_map.py에서 DataFrame을 성공적으로 가져왔습니다.")
+        print(f"   - merged_data: {len(merged_data)}개 행")
+        print(f"   - area1_data: {len(area1_data)}개 행")
+        
         return merged_data, area1_data
-    except FileNotFoundError:
-        print("⚠️ mas_map.py에서 생성된 데이터 파일을 찾을 수 없습니다.")
-        print("   먼저 'python mas_map.py'를 실행하여 데이터를 분석해주세요.")
+        
+    except Exception as e:
+        print(f"❌ DataFrame을 가져오는 중 오류가 발생했습니다: {e}")
         return None, None
 
 def process_data(merged_data, area1_data):
@@ -43,10 +60,14 @@ def create_map_visualization(data):
     #fig: Figure 객체(전체 캔버스  )
     #fig, ax = plt.subplots(figsize=(8, 8)) : 그래프 캔버스와 영역을 생성
     fig, ax = plt.subplots(figsize=(8, 8))
+    
+    
     # 좌표 범위 설정
     #DataFrame의 x,y 좌표의 최소/최대값을 가져옴 (여기서 DataFrame은 merged_data)
     min_x, max_x = data['x'].min(), data['x'].max()
     min_y, max_y = data['y'].min(), data['y'].max()
+    
+    
     # 좌표범위 설정 하는것 (좌표범위 설정 하는것은 그래프 그릴때 중요)
     # 시작점은 좌표의 최소값에서 1을 빼고 끝점은 좌표의 최대값에서 1을 더한다.
     ax.set_xlim(min_x - 1, max_x + 1)
@@ -107,12 +128,12 @@ def create_map_visualization(data):
     plt.close()
 
 if __name__ == '__main__':
-    print("🗺 반달곰 커피 지도 시각화 프로그램")
-    print("=" * 60)
-    print("📋 사용법:")
-    print("   1. 먼저 'python mas_map.py'를 실행하여 데이터를 분석하세요")
-    print("   2. 그 다음 이 프로그램을 실행하세요")
-    print("=" * 60)
+    print("반달곰 커피 지도 시각화 프로그램")
+#    print("=" * 60)
+#    print("📋 사용법:")
+#    print("   1. 먼저 'python mas_map.py'를 실행하여 데이터를 분석하세요")
+#    print("   2. 그 다음 이 프로그램을 실행하세요")
+#    print("=" * 60)
     
     merged_data, area1_data = load_data()
     if merged_data is not None:
