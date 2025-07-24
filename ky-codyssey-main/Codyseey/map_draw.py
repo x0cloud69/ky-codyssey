@@ -16,9 +16,27 @@
 """
 
 import pandas as pd
+
 import matplotlib.pyplot as plt
+########################################################################################
+#matplotlib.pyplot : 그래프를 그리는 모듈
+#plt.subplots : 그래프를 그리는 함수
+#figsize : 그래프의 크기를 지정하는 튜플 (가로, 세로)
+#figsize=(8, 8) : 그래프의 크기를 8x8로 설정 (단위 : 인치)
+#ax : 그래프 영역을 나타내는 Axes 객체
+#fig: Figure 객체(전체 캔버스  )
+#fig, ax = plt.subplots(figsize=(8, 8)) : 그래프 캔버스와 영역을 생성
+########################################################################################
+
 import matplotlib.patches as patches
-import numpy as np
+########################################################################################
+#matplotlib.patches : 그래프에 도형을 그리는 모듈
+#patches.Rectangle : 사각형 도형을 그리는 클래스
+#patches.Circle : 원형 도형을 그리는 클래스
+#patches.Polygon : 다각형 도형을 그리는 클래스
+########################################################################################
+
+
 from mas_map import load_and_analyze_data
 
 # 한글 깨지는 문제 및 음수 표현 해결
@@ -43,7 +61,7 @@ def load_data():
         print(f"❌ DataFrame을 가져오는 중 오류가 발생했습니다: {e}")
         return None, None
 
-def process_data(merged_data, area1_data):
+def process_data(merged_data):
     """이미 처리된 데이터를 사용하는 함수"""
     if merged_data is None or area1_data is None:
         return None
@@ -88,7 +106,7 @@ def create_map_visualization(data):
     # 구조물 시각화
     # iterrows() : DataFrame의 각 행을 순회하는 이터레이터 반환
     # _ : 인덱스 번호
-    # row : 현재 행의 데이터
+    # row : 현재 행의 데이터 (pd.Series 타입)
     # for _, row in ...: 인덱스는 무시하고, 각 행(row)만 사용
     #        row: 한 행의 데이터(Series), 컬럼명으로 값 접근 가능
     for _, row in data.iterrows():
@@ -129,15 +147,10 @@ def create_map_visualization(data):
 
 if __name__ == '__main__':
     print("반달곰 커피 지도 시각화 프로그램")
-#    print("=" * 60)
-#    print("📋 사용법:")
-#    print("   1. 먼저 'python mas_map.py'를 실행하여 데이터를 분석하세요")
-#    print("   2. 그 다음 이 프로그램을 실행하세요")
-#    print("=" * 60)
     
     merged_data, area1_data = load_data()
     if merged_data is not None:
-        data = process_data(merged_data, area1_data)
+        data = process_data(merged_data)
         if data is not None:
             create_map_visualization(data)
         else:
